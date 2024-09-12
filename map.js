@@ -58,11 +58,11 @@ signatureControl.onAdd = function(map) {
     div.innerHTML = `
         <div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 5px; border-radius: 5px;">
             <img src="1.png" width="41" height="41" alt="Developer Logo">
-            <span style="margin-left: 5px; font-size: 1.2em;">
-                🇷🇺 🇵🇸 <a href="https://vk.com/mistershsh" target="_blank" style="text-decoration: none; color: black;">
-                    Mister Sh from Sixieme Terre Solutions
-                </a>
-            </span>
+            <img src="ru.png" width="24" height="24" alt="Russia Flag" style="margin-left: 5px;">
+            <img src="pl.png" width="24" height="24" alt="Palestine Flag" style="margin-left: 0px;">
+            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 5px; text-decoration: none; color: black; font-size: 1.2em;">
+                Mister Sh from Sixieme Terre Solutions
+            </a>
         </div>
     `;
     return div;
