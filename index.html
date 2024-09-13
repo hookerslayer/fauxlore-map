@@ -22,32 +22,31 @@
             height: 32px;
         }
 
+        /* Кнопка отображения легенды в левом верхнем углу */
         .legend-toggle {
             position: absolute;
-            z-index: 2000;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
             padding: 5px 10px;
             background-color: rgba(255, 255, 255, 0.7);
             border: none;
             cursor: pointer;
-            border-radius: 3px;
-            font-size: 10px;
+            border-radius: 5px;
+            font-size: 12px;  /* Уменьшаем размер текста */
         }
 
+        /* На мобильных устройствах: */
         @media (max-width: 768px) {
             .legend {
                 display: none;
             }
 
+            /* Увеличиваем размер легенды на 10% */
             #map-legend {
                 width: auto !important;
                 height: auto !important;
                 max-width: 55%;
-            }
-
-            /* Перемещаем кнопку выше */
-            .legend-toggle {
-                bottom: 210px; /* Поднимаем кнопку над легендой */
-                left: 5px;
             }
         }
 
@@ -60,7 +59,7 @@
 
         .developer-signature {
             position: absolute;
-            bottom: 80px;
+            bottom: 100px;
             right: 10px;
             font-size: 0.9em;
         }
