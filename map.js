@@ -73,11 +73,11 @@ var signatureControl = L.control({position: 'bottomright'});
 signatureControl.onAdd = function(map) {
     var div = L.DomUtil.create('div', 'developer-signature');
     div.innerHTML = `
-        <div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 5px; border-radius: 5px;">
+        <div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 0px; border-radius: 5px;">
             <img src="1.png" width="41" height="41" alt="Developer Logo">
             <img src="ru.png" width="24" height="24" alt="Russia Flag" style="margin-left: 3px;">
             <img src="pl.png" width="24" height="24" alt="Palestine Flag" style="margin-left: 0px;">
-            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 3px; text-decoration: none; color: black; font-size: 1em;">
+            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 3px; text-decoration: none; color: black; font-size: 1.2em;">
                 Mister Sh from Sixieme Terre
             </a>
         </div>
