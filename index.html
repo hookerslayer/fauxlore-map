@@ -22,7 +22,6 @@
             height: 32px;
         }
 
-        /* Кнопка отображения легенды в левом верхнем углу */
         .legend-toggle {
             position: absolute;
             top: 10px;
@@ -41,7 +40,6 @@
                 display: none;
             }
 
-            /* Увеличиваем размер легенды на 10% */
             #map-legend {
                 width: auto !important;
                 height: auto !important;
@@ -49,20 +47,18 @@
             }
         }
 
-        /* На ПК устройствах: */
         @media (min-width: 769px) {
             .legend-toggle {
-                display: none; /* Прячем кнопку "Показать легенду" на ПК */
+                display: none;
             }
         }
 
-        /* Восстанавливаем формат подписи автора */
         .developer-signature {
             position: absolute;
-            bottom: 100px;
-            right: 10px;
-            font-size: 1em;  /* Стандартный размер текста */
-            width: auto;  /* Убираем фиксированную ширину */
+            bottom: 50px;
+            right: 5px;
+            font-size: 1em;
+            width: 200px;
         }
 
         .developer-signature a {
