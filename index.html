@@ -26,17 +26,16 @@
         .legend-toggle {
             position: absolute;
             top: 10px;
-            left: 10px;
+            left: 50px;  /* Сдвигаем кнопку правее */
             z-index: 1000;
             padding: 5px 10px;
             background-color: rgba(255, 255, 255, 0.7);
             border: none;
             cursor: pointer;
             border-radius: 5px;
-            font-size: 12px;  /* Уменьшаем размер текста */
+            font-size: 12px;
         }
 
-        /* На мобильных устройствах: */
         @media (max-width: 768px) {
             .legend {
                 display: none;
@@ -57,11 +56,13 @@
             }
         }
 
+        /* Восстанавливаем формат подписи автора */
         .developer-signature {
             position: absolute;
             bottom: 100px;
             right: 10px;
-            font-size: 0.9em;
+            font-size: 1em;  /* Стандартный размер текста */
+            width: auto;  /* Убираем фиксированную ширину */
         }
 
         .developer-signature a {
