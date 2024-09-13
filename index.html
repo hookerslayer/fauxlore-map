@@ -33,25 +33,27 @@
             font-size: 14px;
         }
 
+        /* На мобильных устройствах: */
         @media (max-width: 768px) {
             .legend {
                 display: none;
             }
 
-            /* Увеличение размеров легенды на 10% */
+            /* Увеличиваем размер легенды на 10% */
             #map-legend {
                 width: auto !important;
                 height: auto !important;
-                max-width: 55%; /* Было 50%, увеличено на 10% */
+                max-width: 55%;
             }
 
-            /* Поднятие кнопки выше */
+            /* Перемещаем кнопку выше */
             .legend-toggle {
-                bottom: 170px; /* Изменено положение кнопки, чтобы она была над легендой */
+                bottom: 200px; /* Поднимаем кнопку над легендой */
                 left: 10px;
             }
         }
 
+        /* На ПК устройствах: */
         @media (min-width: 769px) {
             .legend-toggle {
                 display: none; /* Прячем кнопку "Показать легенду" на ПК */
