@@ -6,29 +6,25 @@
     <title>Fauxlore Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        /* Общие стили для страницы */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
 
-        /* Стиль для контейнера карты */
         #map {
             height: 100vh;
             width: 100%;
         }
 
-        /* Стили для маркеров */
         .leaflet-marker-icon {
             width: 32px;
             height: 32px;
         }
 
-        /* Кнопка для показа/скрытия легенды */
         .legend-toggle {
             position: absolute;
-            bottom: 10px;
+            bottom: 80px;
             left: 10px;
             z-index: 1000;
             padding: 10px 15px;
@@ -39,19 +35,28 @@
             font-size: 14px;
         }
 
-        /* Легенда скрыта на мобильных устройствах */
         @media (max-width: 768px) {
             .legend {
                 display: none;
             }
+
+            #map-legend {
+                width: auto !important;
+                height: auto !important;
+                max-width: 50%;
+            }
         }
 
-        /* Размер и позиция подписи разработчика для мобильных устройств */
         @media (max-width: 768px) {
             .developer-signature {
-                bottom: 50px !important;
+                bottom: 100px !important;
                 font-size: 0.9em;
             }
+        }
+
+        .developer-signature a {
+            color: blue;
+            text-decoration: underline;
         }
     </style>
 </head>
