@@ -51,7 +51,6 @@ map.on('baselayerchange', function(e) {
     legendImage.height = legendData.height / 1.8;
 });
 
-// Добавляем функционал для кнопки скрытия/показа легенды
 var legendToggleBtn = document.getElementById('legend-toggle');
 legendToggleBtn.addEventListener('click', function() {
     var legendElement = document.querySelector('.legend');
@@ -64,7 +63,6 @@ legendToggleBtn.addEventListener('click', function() {
     }
 });
 
-// По умолчанию скрываем легенду на мобильных устройствах
 if (window.innerWidth <= 768) {
     document.querySelector('.legend').style.display = 'none';
     legendToggleBtn.textContent = 'Показать легенду';
@@ -79,8 +77,8 @@ signatureControl.onAdd = function(map) {
             <img src="1.png" width="41" height="41" alt="Developer Logo">
             <img src="ru.png" width="24" height="16" alt="Russia Flag" style="margin-left: 5px;">
             <img src="pl.png" width="24" height="16" alt="Palestine Flag" style="margin-left: 5px;">
-            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 5px; text-decoration: none; color: black; font-size: 1.2em;">
-                Mister Sh from Sixieme Terre Solutions
+            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 5px; text-decoration: none; color: blue; text-decoration: underline;">
+                Mister Sh from Sixieme Terre
             </a>
         </div>
     `;
