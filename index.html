@@ -24,7 +24,7 @@
 
         .legend-toggle {
             position: absolute;
-            bottom: 80px;
+            bottom: 150px;
             left: 10px;
             z-index: 1000;
             padding: 10px 15px;
@@ -43,7 +43,7 @@
             #map-legend {
                 width: auto !important;
                 height: auto !important;
-                max-width: 50%;
+                max-width: 55%;
             }
         }
 
@@ -51,6 +51,16 @@
             .developer-signature {
                 bottom: 100px !important;
                 font-size: 0.9em;
+            }
+
+            .legend-toggle {
+                display: block;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .legend-toggle {
+                display: none;
             }
         }
 
