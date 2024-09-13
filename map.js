@@ -63,7 +63,6 @@ legendToggleBtn.addEventListener('click', function() {
     }
 });
 
-// Скрываем легенду по умолчанию на мобильных устройствах
 if (window.innerWidth <= 768) {
     document.querySelector('.legend').style.display = 'none';
     legendToggleBtn.textContent = 'Показать легенду';
