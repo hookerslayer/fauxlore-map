@@ -24,10 +24,40 @@
             width: 32px;
             height: 32px;
         }
+
+        /* Кнопка для показа/скрытия легенды */
+        .legend-toggle {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Легенда скрыта на мобильных устройствах */
+        @media (max-width: 768px) {
+            .legend {
+                display: none;
+            }
+        }
+
+        /* Размер и позиция подписи разработчика для мобильных устройств */
+        @media (max-width: 768px) {
+            .developer-signature {
+                bottom: 50px !important;
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
+    <button class="legend-toggle" id="legend-toggle">Показать легенду</button>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="map.js"></script>
