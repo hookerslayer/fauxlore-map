@@ -51,6 +51,25 @@ map.on('baselayerchange', function(e) {
     legendImage.height = legendData.height / 1.8;
 });
 
+// Добавляем функционал для кнопки скрытия/показа легенды
+var legendToggleBtn = document.getElementById('legend-toggle');
+legendToggleBtn.addEventListener('click', function() {
+    var legendElement = document.querySelector('.legend');
+    if (legendElement.style.display === 'none' || legendElement.style.display === '') {
+        legendElement.style.display = 'block';
+        legendToggleBtn.textContent = 'Скрыть легенду';
+    } else {
+        legendElement.style.display = 'none';
+        legendToggleBtn.textContent = 'Показать легенду';
+    }
+});
+
+// По умолчанию скрываем легенду на мобильных устройствах
+if (window.innerWidth <= 768) {
+    document.querySelector('.legend').style.display = 'none';
+    legendToggleBtn.textContent = 'Показать легенду';
+}
+
 var signatureControl = L.control({position: 'bottomright'});
 
 signatureControl.onAdd = function(map) {
@@ -58,8 +77,8 @@ signatureControl.onAdd = function(map) {
     div.innerHTML = `
         <div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 5px; border-radius: 5px;">
             <img src="1.png" width="41" height="41" alt="Developer Logo">
-            <img src="ru.png" width="24" height="24" alt="Russia Flag" style="margin-left: 5px;">
-            <img src="pl.png" width="24" height="24" alt="Palestine Flag" style="margin-left: 0px;">
+            <img src="ru.png" width="24" height="16" alt="Russia Flag" style="margin-left: 5px;">
+            <img src="pl.png" width="24" height="16" alt="Palestine Flag" style="margin-left: 5px;">
             <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 5px; text-decoration: none; color: black; font-size: 1.2em;">
                 Mister Sh from Sixieme Terre Solutions
             </a>
