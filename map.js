@@ -77,8 +77,8 @@ signatureControl.onAdd = function(map) {
             <img src="1.png" width="41" height="41" alt="Developer Logo">
             <img src="ru.png" width="24" height="16" alt="Russia Flag" style="margin-left: 5px;">
             <img src="pl.png" width="24" height="16" alt="Palestine Flag" style="margin-left: 5px;">
-            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 5px; text-decoration: none; color: blue; text-decoration: underline;">
-                Mister Sh from Sixieme Terre
+            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 5px; text-decoration: none; color: black; font-size: 1.2em;">
+                Mister Sh from Sixieme Terre Solutions
             </a>
         </div>
     `;
