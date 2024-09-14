@@ -41,28 +41,37 @@ var layers = {
     'Порт': L.layerGroup().addTo(map)
 };
 
-// ID Google Таблицы
+// ID Google Таблицы и API Key
 var url = `https://sheets.googleapis.com/v4/spreadsheets/1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k/values/Sheet1!A1:D100?key=AIzaSyBdhS5jcD7VLxHDWwy1cC8pZUM0p6_S4xU`;
 
 // Загружаем данные с Google Sheets
 fetch(url)
     .then(response => response.json())
     .then(data => {
-        var entries = data.feed.entry;
-        entries.forEach(function(entry) {
-            var name = entry.gsx$name.$t;
-            var description = entry.gsx$description.$t;
-            var lat = parseFloat(entry.gsx$lat.$t);
-            var lng = parseFloat(entry.gsx$lng.$t);
-            var type = entry.gsx$type.$t;
+        // Получаем строки значений из таблицы
+        var rows = data.values;
 
-            // Создаем метку
-            var marker = L.marker([lat, lng], { icon: iconTypes[type] })
-                .bindPopup(`<b>${name}</b><br>${description}`);
+        // Пропускаем первую строку, если это заголовки
+        rows.slice(1).forEach(function(row) {
+            var name = row[0]; // Имя
+            var description = row[1]; // Описание
+            var lat = parseFloat(row[2]); // Широта
+            var lng = parseFloat(row[3]); // Долгота
+            var type = row[4]; // Тип метки
 
-            // Добавляем метку в соответствующую группу
-            layers[type].addLayer(marker);
+            // Проверяем, что данные корректны
+            if (name && description && !isNaN(lat) && !isNaN(lng) && iconTypes[type]) {
+                // Создаем метку
+                var marker = L.marker([lat, lng], { icon: iconTypes[type] })
+                    .bindPopup(`<b>${name}</b><br>${description}`);
+
+                // Добавляем метку в соответствующую группу
+                layers[type].addLayer(marker);
+            }
         });
+    })
+    .catch(error => {
+        console.error("Ошибка загрузки данных с Google Sheets:", error);
     });
 
 // Добавляем контрол для включения/выключения групп меток
@@ -89,68 +98,3 @@ capitalMarker.on('dragend', function(event) {
     marker.setPopupContent(`<b>Столица</b><br>Координаты: ${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}`).openPopup();
     console.log(`Новые координаты: ${position.lat}, ${position.lng}`); // Лог координат
 });
-
-// Легенда карты
-var legends = {
-    "Политическая карта": {src: '713x877.png', width: 713, height: 877},
-    "Ресурсная карта": {src: '395x720.png', width: 395, height: 720},
-    "Религиозная карта": {src: '396x721_rel.png', width: 396, height: 721},
-    "Расовая карта": {src: '396x721_rac.png', width: 396, height: 721},
-    "Географическая карта": {src: '396x721.png', width: 395, height: 720}
-};
-
-var legendControl = L.control({position: 'bottomleft'});
-
-legendControl.onAdd = function(map) {
-    var div = L.DomUtil.create('div', 'legend');
-    div.innerHTML = '<img src="713x877.png" id="map-legend" width="' + (713 / 1.5) + '" height="' + (877 / 1.5) + '">';
-    return div;
-};
-
-legendControl.addTo(map);
-
-map.on('baselayerchange', function(e) {
-    var legendImage = document.getElementById('map-legend');
-    var legendData = legends[e.name];
-    legendImage.src = legendData.src;
-    legendImage.width = legendData.width / 1.8;
-    legendImage.height = legendData.height / 1.8;
-});
-
-// Кнопка для показа/скрытия легенды
-var legendToggleBtn = document.getElementById('legend-toggle');
-legendToggleBtn.addEventListener('click', function() {
-    var legendElement = document.querySelector('.legend');
-    if (legendElement.style.display === 'none' || legendElement.style.display === '') {
-        legendElement.style.display = 'block';
-        legendToggleBtn.textContent = 'Скрыть легенду';
-    } else {
-        legendElement.style.display = 'none';
-        legendToggleBtn.textContent = 'Показать легенду';
-    }
-});
-
-if (window.innerWidth <= 768) {
-    document.querySelector('.legend').style.display = 'none';
-    legendToggleBtn.textContent = 'Показать легенду';
-}
-
-// Подпись автора
-var signatureControl = L.control({position: 'bottomright'});
-
-signatureControl.onAdd = function(map) {
-    var div = L.DomUtil.create('div', 'developer-signature');
-    div.innerHTML = `
-        <div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 5px; border-radius: 5px;">
-            <img src="1.png" width="41" height="41" alt="Developer Logo">
-            <img src="ru.png" width="24" height="24" alt="Russia Flag" style="margin-left: 3px;">
-            <img src="pl.png" width="24" height="24" alt="Palestine Flag" style="margin-left: 0px;">
-            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 3px; text-decoration: underline; color: blue; font-size: 1em;">
-                Mister Sh from Sixieme Terre
-            </a>
-        </div>
-    `;
-    return div;
-};
-
-signatureControl.addTo(map);
