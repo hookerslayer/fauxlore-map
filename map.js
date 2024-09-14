@@ -42,31 +42,37 @@ var layers = {
 };
 
 // ID Google Таблицы и API Key
-var url = `https://sheets.googleapis.com/v4/spreadsheets/1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k/values/Sheet1!A1:D100?key=AIzaSyBdhS5jcD7VLxHDWwy1cC8pZUM0p6_S4xU`;
+var url = `https://sheets.googleapis.com/v4/spreadsheets/1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k/values/Sheet1!A1:E100?key=AIzaSyBdhS5jcD7VLxHDWwy1cC8pZUM0p6_S4xU`;
 
 // Загружаем данные с Google Sheets
 fetch(url)
     .then(response => response.json())
     .then(data => {
+        // Логируем полученные данные для отладки
+        console.log("Полученные данные из Google Sheets:", data);
+
         // Получаем строки значений из таблицы
         var rows = data.values;
 
         // Пропускаем первую строку, если это заголовки
         rows.slice(1).forEach(function(row) {
-            var name = row[0]; // Имя
-            var description = row[1]; // Описание
-            var lat = parseFloat(row[2]); // Широта
-            var lng = parseFloat(row[3]); // Долгота
-            var type = row[4]; // Тип метки
+            // Важно убедиться, что все необходимые поля присутствуют
+            if (row.length >= 5) {
+                var name = row[0]; // Имя
+                var description = row[1]; // Описание
+                var lat = parseFloat(row[2]); // Широта
+                var lng = parseFloat(row[3]); // Долгота
+                var type = row[4]; // Тип метки
 
-            // Проверяем, что данные корректны
-            if (name && description && !isNaN(lat) && !isNaN(lng) && iconTypes[type]) {
-                // Создаем метку
-                var marker = L.marker([lat, lng], { icon: iconTypes[type] })
-                    .bindPopup(`<b>${name}</b><br>${description}`);
+                // Проверяем корректность данных перед добавлением метки
+                if (!isNaN(lat) && !isNaN(lng) && iconTypes[type]) {
+                    // Создаем метку
+                    var marker = L.marker([lat, lng], { icon: iconTypes[type] })
+                        .bindPopup(`<b>${name}</b><br>${description}`);
 
-                // Добавляем метку в соответствующую группу
-                layers[type].addLayer(marker);
+                    // Добавляем метку в соответствующую группу
+                    layers[type].addLayer(marker);
+                }
             }
         });
     })
