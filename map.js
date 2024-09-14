@@ -25,6 +25,73 @@ L.control.layers(baseMaps).addTo(map);
 
 map.fitBounds(bounds);
 
+// Иконки для разных типов меток
+var iconTypes = {
+    'Столица': L.icon({iconUrl: 'capital-icon.png', iconSize: [32, 32]}),
+    'Город': L.icon({iconUrl: 'city-icon.png', iconSize: [32, 32]}),
+    'Крепость': L.icon({iconUrl: 'fortress-icon.png', iconSize: [32, 32]}),
+    'Порт': L.icon({iconUrl: 'port-icon.png', iconSize: [32, 32]})
+};
+
+// Группы слоев для разных типов меток
+var layers = {
+    'Столица': L.layerGroup().addTo(map),
+    'Город': L.layerGroup().addTo(map),
+    'Крепость': L.layerGroup().addTo(map),
+    'Порт': L.layerGroup().addTo(map)
+};
+
+// ID Google Таблицы
+var spreadsheetId = '1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k';
+var url = `https://spreadsheets.google.com/feeds/list/${spreadsheetId}/od6/public/values?alt=json`;
+
+// Загружаем данные с Google Sheets
+fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        var entries = data.feed.entry;
+        entries.forEach(function(entry) {
+            var name = entry.gsx$name.$t;
+            var description = entry.gsx$description.$t;
+            var lat = parseFloat(entry.gsx$lat.$t);
+            var lng = parseFloat(entry.gsx$lng.$t);
+            var type = entry.gsx$type.$t;
+
+            // Создаем метку
+            var marker = L.marker([lat, lng], { icon: iconTypes[type] })
+                .bindPopup(`<b>${name}</b><br>${description}`);
+
+            // Добавляем метку в соответствующую группу
+            layers[type].addLayer(marker);
+        });
+    });
+
+// Добавляем контрол для включения/выключения групп меток
+L.control.layers(null, {
+    'Столицы': layers['Столица'],
+    'Города': layers['Город'],
+    'Крепости': layers['Крепость'],
+    'Порты': layers['Порт']
+}).addTo(map);
+
+// Добавляем перемещаемый маркер столицы
+var capitalMarker = L.marker([1000, 1000], {
+    icon: iconTypes['Столица'],
+    draggable: true // Маркер можно перемещать
+}).addTo(map);
+
+// Всплывающее окно с координатами
+capitalMarker.bindPopup(`<b>Столица</b><br>Координаты: ${capitalMarker.getLatLng().lat}, ${capitalMarker.getLatLng().lng}`).openPopup();
+
+// Обновляем координаты при перемещении маркера
+capitalMarker.on('dragend', function(event) {
+    var marker = event.target;
+    var position = marker.getLatLng(); // Получаем новые координаты
+    marker.setPopupContent(`<b>Столица</b><br>Координаты: ${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}`).openPopup();
+    console.log(`Новые координаты: ${position.lat}, ${position.lng}`); // Лог координат
+});
+
+// Легенда карты
 var legends = {
     "Политическая карта": {src: '713x877.png', width: 713, height: 877},
     "Ресурсная карта": {src: '395x720.png', width: 395, height: 720},
@@ -51,6 +118,7 @@ map.on('baselayerchange', function(e) {
     legendImage.height = legendData.height / 1.8;
 });
 
+// Кнопка для показа/скрытия легенды
 var legendToggleBtn = document.getElementById('legend-toggle');
 legendToggleBtn.addEventListener('click', function() {
     var legendElement = document.querySelector('.legend');
@@ -68,6 +136,7 @@ if (window.innerWidth <= 768) {
     legendToggleBtn.textContent = 'Показать легенду';
 }
 
+// Подпись автора
 var signatureControl = L.control({position: 'bottomright'});
 
 signatureControl.onAdd = function(map) {
