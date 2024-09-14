@@ -42,7 +42,7 @@ var layers = {
 };
 
 // ID Google Таблицы
-var spreadsheetId = '1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k';
+var spreadsheetId = '2PACX-1vQ6M9KWCs13CF4RAQeOzK8oMwJ5PBeYyVgnB5JRiGHMVqKDM7fM9pp3F31O22HYQrsA22oCd5vpcMW5';
 var url = `https://spreadsheets.google.com/feeds/list/${spreadsheetId}/od6/public/values?alt=json`;
 
 // Загружаем данные с Google Sheets
