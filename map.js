@@ -1,6 +1,7 @@
 var map = L.map('map', {
     crs: L.CRS.Simple,
-    minZoom: -5
+    minZoom: -5,
+    maxZoom: 3
 });
 
 var bounds = [[0, 0], [2154, 2652]];
@@ -97,10 +98,36 @@ var capitalMarker = L.marker([1000, 1000], {
 // Всплывающее окно с координатами
 capitalMarker.bindPopup(`<b>Столица</b><br>Координаты: ${capitalMarker.getLatLng().lat}, ${capitalMarker.getLatLng().lng}`).openPopup();
 
+
 // Обновляем координаты при перемещении маркера
 capitalMarker.on('dragend', function(event) {
     var marker = event.target;
     var position = marker.getLatLng(); // Получаем новые координаты
+    
     marker.setPopupContent(`<b>Столица</b><br>Координаты: ${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}`).openPopup();
     console.log(`Новые координаты: ${position.lat}, ${position.lng}`); // Лог координат
+});
+
+//Меняет рендер карты при близком приближении
+function RenderingChanger(){
+    let curZoom = map.getZoom();
+    let mapContainer = map.getContainer();
+
+    // Выбираем все элементы img внутри контейнера карты
+    let images = mapContainer.querySelectorAll('img');
+
+    // Изменяем стили для каждого элемента img
+    images.forEach(function(img) {
+        if( curZoom >= 2){
+            img.style.imageRendering = "pixelated";
+        }
+        else{
+            img.style.imageRendering = "auto";
+        }
+    });
+}
+
+//вызывает функцию при изменении приближения карты
+map.on('zoomend', function(){
+    RenderingChanger();
 });
