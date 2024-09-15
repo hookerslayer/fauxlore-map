@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#map {
+    height: 100vh;
+    width: 100%;
+}
+
+.leaflet-marker-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.legend-toggle {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+    z-index: 1000;
+    padding: 5px 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .legend {
+        display: none;
+    }
+
+    #map-legend {
+        width: auto !important;
+        height: auto !important;
+        max-width: 55%;
+    }
+}
+
+@media (min-width: 769px) {
+    .legend-toggle {
+        display: none;
+    }
+}
+
+.developer-signature {
+    position: absolute;
+    bottom: 50px;
+    right: 0px;
+    font-size: 1em;
+    width: 200px;
+}
+
+.leaflet-image-layer{
+    image-rendering: auto;
+}
