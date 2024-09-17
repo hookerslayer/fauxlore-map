@@ -28,7 +28,7 @@ map.fitBounds(bounds);
 
 // Иконки для разных типов меток
 var iconTypes = {
-    'Столица': L.icon({iconUrl: 'capital-icon.png', iconSize: [30, 44], iconAnchor:   [51, 148], popupAnchor: [51, -3]}),
+    'Столица': L.icon({iconUrl: 'capital-icon.png', iconSize: [25, 37], iconAnchor:   [13, 37], popupAnchor: [13, -3]}),
     'Город': L.icon({iconUrl: 'city-icon.png'}),
     'Крепость': L.icon({iconUrl: 'fortress-icon.png'}),
     'Порт': L.icon({iconUrl: 'port-icon.png'})
