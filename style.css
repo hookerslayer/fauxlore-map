@@ -9,11 +9,6 @@ body {
     width: 100%;
 }
 
-.leaflet-marker-icon {
-    width: 32px;
-    height: 32px;
-}
-
 .legend-toggle {
     position: absolute;
     top: 10px;
