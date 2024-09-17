@@ -28,10 +28,10 @@ map.fitBounds(bounds);
 
 // Иконки для разных типов меток
 var iconTypes = {
-    'Столица': L.icon({iconUrl: 'capital-icon.png', iconSize: [26, 37], iconAnchor:   [13, 37], popupAnchor: [13, 0]}),
-    'Город': L.icon({iconUrl: 'city-icon.png'}),
-    'Крепость': L.icon({iconUrl: 'fortress-icon.png'}),
-    'Порт': L.icon({iconUrl: 'port-icon.png'})
+    'Столица': L.icon({iconUrl: 'capital-icon.png', iconSize: [26, 36], iconAnchor:   [13, 36], popupAnchor: [0, -36]}),
+    'Город': L.icon({iconUrl: 'city-icon.png', iconSize: [26, 36], iconAnchor:   [13, 36], popupAnchor: [0, -36]}),
+    'Крепость': L.icon({iconUrl: 'fortress-icon.png', iconSize: [26, 36], iconAnchor:   [13, 36], popupAnchor: [0, -36]}),
+    'Порт': L.icon({iconUrl: 'port-icon.png', iconSize: [26, 36], iconAnchor:   [13, 36], popupAnchor: [0, -36]})
 };
 
 // Группы слоев для разных типов меток
