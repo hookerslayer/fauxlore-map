@@ -1,6 +1,6 @@
 var map = L.map('map', {
     crs: L.CRS.Simple,
-    minZoom: -5,
+    minZoom: -2,
     maxZoom: 2
 });
 
@@ -28,7 +28,7 @@ map.fitBounds(bounds);
 
 // Иконки для разных типов меток
 var iconTypes = {
-    'Столица': L.icon({iconUrl: 'capital-icon.png', iconSize: [50, 73], iconAnchor:   [25, 36]}),
+    'Столица': L.icon({iconUrl: 'capital-icon.png', iconSize: [30, 44], iconAnchor:   [51, 148], popupAnchor: [51, -3]}),
     'Город': L.icon({iconUrl: 'city-icon.png'}),
     'Крепость': L.icon({iconUrl: 'fortress-icon.png'}),
     'Порт': L.icon({iconUrl: 'port-icon.png'})
