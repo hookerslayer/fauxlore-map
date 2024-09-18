@@ -9,37 +9,6 @@ body {
     width: 100%;
 }
 
-.legend-toggle {
-    position: absolute;
-    top: 10px;
-    left: 50px;
-    z-index: 1000;
-    padding: 5px 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 12px;
-}
-
-@media (max-width: 768px) {
-    .legend {
-        display: none;
-    }
-
-    #map-legend {
-        width: auto !important;
-        height: auto !important;
-        max-width: 55%;
-    }
-}
-
-@media (min-width: 769px) {
-    .legend-toggle {
-        display: none;
-    }
-}
-
 .developer-signature {
     position: absolute;
     bottom: 0px;
@@ -64,5 +33,28 @@ top: 2px
 }
 
 .leaflet-popup-content-wrapper {
+    padding: 2px;
+    border-radius: 5px;
 }
+
+.leaflet-popup-tip {
+    background-color: white;
+}
+
+.popup-header {
+    color: black;
+    font-size: 20px;
+    text-decoration: underline;
+    padding: 0px;
+    border-radius: 0;
+}
+
+.popup-description {
+    color: black;
+    font-size: 14px;
+    padding: 1px;
+    border-radius: 0;
+}
+
+
 	
