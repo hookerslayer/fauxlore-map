@@ -158,7 +158,7 @@ function RenderingChanger(){
 
     // Изменяем стили для каждого элемента img
     images.forEach(function(img) {
-        if( curZoom >= 2){
+        if( curZoom >= 1){
             img.style.imageRendering = "pixelated";
         }
         else{
