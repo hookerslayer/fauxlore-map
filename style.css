@@ -42,7 +42,7 @@ body {
 
 .developer-signature {
     position: absolute;
-    bottom: 50px;
+    bottom: 0px;
     right: 0px;
     font-size: 1em;
     width: 200px;
@@ -51,3 +51,7 @@ body {
 .leaflet-image-layer{
     image-rendering: auto;
 }
+
+.leaflet-popup-content-wrapper {
+}
+	

@@ -1,7 +1,12 @@
 var map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -2,
-    maxZoom: 2
+    maxZoom: 2,
+	attributionControl: false,
+	fullscreenControl: true,
+	fullscreenControlOptions: {
+		position: 'topleft'
+	}
 });
 
 var bounds = [[0, 0], [2154, 2652]];
@@ -34,7 +39,8 @@ var iconTypes = {
 		markerColor: '#B22222',  // Marker fill color
 		outlineColor: 'black',            // Marker outline color
 		outlineWidth: 2,                   // Marker outline width 
-		iconSize: [25, 34]                 // Width and height of the icon
+		iconSize: [25, 34],                 // Width and height of the icon
+		popupAnchor: [0, -34]
   }),
     'Город': L.IconMaterial.icon({
 		icon: 'home',            // Name of Material icon
@@ -42,7 +48,8 @@ var iconTypes = {
 		markerColor: 'Orange',  // Marker fill color
 		outlineColor: 'black',            // Marker outline color
 		outlineWidth: 2,                   // Marker outline width 
-		iconSize: [25, 34]                 // Width and height of the icon
+		iconSize: [25, 34],                 // Width and height of the icon
+		popupAnchor: [0, -34]
   }),
     'Крепость': L.IconMaterial.icon({
 		icon: 'castle',            // Name of Material icon
@@ -50,7 +57,8 @@ var iconTypes = {
 		markerColor: 'Gray',  // Marker fill color
 		outlineColor: 'black',            // Marker outline color
 		outlineWidth: 2,                   // Marker outline width 
-		iconSize: [25, 34]                 // Width and height of the icon
+		iconSize: [25, 34],                 // Width and height of the icon
+		popupAnchor: [0, -34]
   }),
     'Порт': L.IconMaterial.icon({
 		icon: 'anchor',            // Name of Material icon
@@ -58,7 +66,8 @@ var iconTypes = {
 		markerColor: 'SteelBlue',  // Marker fill color
 		outlineColor: 'black',            // Marker outline color
 		outlineWidth: 2,                   // Marker outline width 
-		iconSize: [25, 34]                 // Width and height of the icon
+		iconSize: [25, 34],                 // Width and height of the icon
+		popupAnchor: [0, -34]
   })
 };
 
@@ -97,7 +106,10 @@ fetch(url)
                 if (!isNaN(lat) && !isNaN(lng) && iconTypes[type]) {
                     // Создаем метку
                     var marker = L.marker([lat, lng], { icon: iconTypes[type] })
-                        .bindPopup(`<b>${name}</b><br>${description}`);
+                        .bindPopup(`
+                            <div class="popup-header">${name}</div>
+                            <div class="popup-description">${description}</div>
+                        `);
 
                     // Добавляем метку в соответствующую группу
                     layers[type].addLayer(marker);
@@ -166,15 +178,14 @@ var signatureControl = L.control({position: 'bottomright'});
 signatureControl.onAdd = function(map) {
     var div = L.DomUtil.create('div', 'developer-signature');
     div.innerHTML = 
-        <div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 5px; border-radius: 5px;">
-            <img src="1.png" width="41" height="41" alt="Developer Logo">
-            <img src="ru.png" width="24" height="24" alt="Russia Flag" style="margin-left: 3px;">
-            <img src="pl.png" width="24" height="24" alt="Palestine Flag" style="margin-left: 0px;">
-            <a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 3px; text-decoration: underline; color: blue; font-size: 1em;">
-                Mister Sh from Sixieme Terre
-            </a>
-        </div>
-    ;
+        '<div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 0px; border-radius: 0px;">' +
+            '<img src="1.png" width="41" height="41" alt="Developer Logo">' +
+            '<img src="ru.png" width="24" height="24" alt="Russia Flag" style="margin-left: 3px;">' +
+            '<img src="pl.png" width="24" height="24" alt="Palestine Flag" style="margin-left: 0px;">' +
+            '<a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 3px; text-decoration: underline; color: blue; font-size: 1em;">' +
+                'Mister Sh from Sixieme Terre' +
+            '</a>' +
+        '</div>';
     return div;
 };
 
