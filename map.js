@@ -33,42 +33,18 @@ map.fitBounds(bounds);
 
 // Иконки для разных типов меток
 var iconTypes = {
-    'Столица': L.IconMaterial.icon({
-		icon: 'star',            // Name of Material icon
-		iconColor: 'white',              // Material icon color (could be rgba, hex, html name...)
-		markerColor: '#B22222',  // Marker fill color
-		outlineColor: 'black',            // Marker outline color
-		outlineWidth: 2,                   // Marker outline width 
-		iconSize: [25, 34],                 // Width and height of the icon
-		popupAnchor: [0, -34]
-  }),
-    'Город': L.IconMaterial.icon({
-		icon: 'home',            // Name of Material icon
-		iconColor: 'white',              // Material icon color (could be rgba, hex, html name...)
-		markerColor: 'Orange',  // Marker fill color
-		outlineColor: 'black',            // Marker outline color
-		outlineWidth: 2,                   // Marker outline width 
-		iconSize: [25, 34],                 // Width and height of the icon
-		popupAnchor: [0, -34]
-  }),
-    'Крепость': L.IconMaterial.icon({
-		icon: 'castle',            // Name of Material icon
-		iconColor: 'white',              // Material icon color (could be rgba, hex, html name...)
-		markerColor: 'Gray',  // Marker fill color
-		outlineColor: 'black',            // Marker outline color
-		outlineWidth: 2,                   // Marker outline width 
-		iconSize: [25, 34],                 // Width and height of the icon
-		popupAnchor: [0, -34]
-  }),
+    'Столица': L.icon({iconUrl: 'capital-icon.png', iconSize: [24, 37], iconAnchor: [12, 37], popupAnchor: [0, -37]}),
+    'Город': L.icon({iconUrl: 'city-icon.png', iconSize: [24, 37], iconAnchor: [12, 37], popupAnchor: [0, -37]}),
+    'Крепость': L.icon({iconUrl: 'fortress-icon.png', iconSize: [24, 37], iconAnchor: [12, 37], popupAnchor: [0, -37]}),
     'Порт': L.IconMaterial.icon({
-		icon: 'anchor',            // Name of Material icon
-		iconColor: 'white',              // Material icon color (could be rgba, hex, html name...)
-		markerColor: 'SteelBlue',  // Marker fill color
-		outlineColor: 'black',            // Marker outline color
-		outlineWidth: 2,                   // Marker outline width 
-		iconSize: [25, 34],                 // Width and height of the icon
+		icon: 'anchor', // Name of Material icon
+		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+		markerColor: 'SteelBlue', // Marker fill color
+		outlineColor: 'black', // Marker outline color
+		outlineWidth: 2, // Marker outline width
+		iconSize: [25, 34], // Width and height of the icon
 		popupAnchor: [0, -34]
-  })
+})
 };
 
 // Группы слоев для разных типов меток
