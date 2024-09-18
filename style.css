@@ -52,6 +52,17 @@ body {
     image-rendering: auto;
 }
 
+.leaflet-marker-icon {
+will-change: top;
+transition: top 300ms;
+padding-bottom: 2px!important
+}
+
+.leaflet-marker-icon:hover {
+transition: top 125ms;
+top: 2px
+}
+
 .leaflet-popup-content-wrapper {
 }
 	

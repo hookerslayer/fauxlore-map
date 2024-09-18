@@ -61,10 +61,10 @@ var iconTypes = {
 		popupAnchor: [0, -34]
 	}),
 	'Порт': L.icon({
-    iconUrl: 'port-icon.png',
-    iconSize:     [14, 25], // size of the icon
-    iconAnchor:   [7, 25], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -25] // point from which the popup should open relative to the iconAnchor
+    iconUrl: 'port-icon_v2.png',
+    iconSize:     [11, 22], // size of the icon
+    iconAnchor:   [5, 22], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -22] // point from which the popup should open relative to the iconAnchor
 	})
 };
 
