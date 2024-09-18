@@ -60,11 +60,14 @@ var iconTypes = {
 		iconSize: [25, 34], // Width and height of the icon
 		popupAnchor: [0, -34]
 	}),
-	'Порт': L.icon({
-    iconUrl: 'port-icon_v2.png',
-    iconSize:     [11, 22], // size of the icon
-    iconAnchor:   [5, 22], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -22] // point from which the popup should open relative to the iconAnchor
+	'Порт': L.IconMaterial.icon({
+		icon: 'anchor', // Name of Material icon
+		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+		markerColor: 'SteelBlue', // Marker fill color
+		outlineColor: 'black', // Marker outline color
+		outlineWidth: 2, // Marker outline width
+		iconSize: [12, 16], // Width and height of the icon
+		popupAnchor: [0, -16]
 	})
 };
 
