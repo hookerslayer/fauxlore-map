@@ -15,6 +15,8 @@
             width: 100%; /* Полная ширина окна */
         }
     </style>
+    <!-- Настройка CSP для разработки -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://www.googleapis.com https://fonts.googleapis.com https://unpkg.com;">
 </head>
 <body>
     <div id="map"></div>
