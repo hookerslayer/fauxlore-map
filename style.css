@@ -43,7 +43,7 @@ top: 2px
 
 .popup-header {
     color: black;
-    font-size: 6px;
+    font-size: 14px;
     text-decoration: underline;
     padding: 0px;
     border-radius: 0;
@@ -51,7 +51,7 @@ top: 2px
 
 .popup-description {
     color: black;
-    font-size: 6px;
+    font-size: 10px;
     padding: 0px;
     border-radius: 0;
 }
