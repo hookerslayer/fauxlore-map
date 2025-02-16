@@ -174,4 +174,101 @@ function createPopupForm(marker) {
                 <option value="Порт">Порт</option>
             </select><br>
             <label for="markerCoords">Координаты:</label>
-            <input type="text" id="markerCoords" name
+            <input type="text" id="markerCoords" name="markerCoords" value="${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}" readonly><br>
+            <button type="button" onclick="submitMarkerData()">Сохранить</button>
+        </form>
+    `;
+    marker.bindPopup(formHtml).openPopup();
+}
+
+// Функция для отправки данных в Google Sheets
+function submitMarkerData() {
+    var form = document.getElementById('markerForm');
+    var markerName = form.elements['markerName'].value;
+    var markerType = form.elements['markerType'].value;
+    var markerCoords = form.elements['markerCoords'].value.split(',').map(Number);
+    var lat = markerCoords[0];
+    var lng = markerCoords[1];
+
+    // Поиск первой свободной строки в столбце A
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: spreadsheetId,
+        range: 'Sheet1!A:A'
+    }).then(function(response) {
+        var rows = response.result.values || [];
+        var rowIndex = 2; // Начинаем с A2
+        while (rows[rowIndex - 2]) {
+            rowIndex++;
+        }
+
+        // Данные для записи
+        var dataToAppend = {
+            values: [
+                [markerName, '', lat, lng, markerType]
+            ]
+        };
+
+        // Отправка данных в Google Sheets
+        gapi.client.sheets.spreadsheets.values.append({
+            spreadsheetId: spreadsheetId,
+            range: `Sheet1!A${rowIndex}:E${rowIndex}`,
+            valueInputOption: 'RAW',
+            resource: dataToAppend
+        }).then(function(response) {
+            console.log('Данные успешно добавлены:', response.result);
+            alert('Данные успешно добавлены!');
+        }).catch(function(error) {
+            console.error('Ошибка при добавлении данных:', error);
+            alert('Ошибка при добавлении данных.');
+        });
+    }).catch(function(error) {
+        console.error('Ошибка при загрузке данных для поиска свободной строки:', error);
+        alert('Ошибка при загрузке данных для поиска свободной строки.');
+    });
+}
+
+// Всплывающее окно с формой
+createPopupForm(capitalMarker);
+
+// Обновляем форму при перемещении маркера
+capitalMarker.on('dragend', function(event) {
+    createPopupForm(event.target);
+});
+
+// Меняет рендер карты при близком приближении
+function RenderingChanger() {
+    let curZoom = map.getZoom();
+    let mapContainer = map.getContainer();
+    // Выбираем все элементы img внутри контейнера карты
+    let images = mapContainer.querySelectorAll('img');
+    // Изменяем стили для каждого элемента img
+    images.forEach(function(img) {
+        if (curZoom >= 1) {
+            img.style.imageRendering = "pixelated";
+        } else {
+            img.style.imageRendering = "auto";
+        }
+    });
+}
+
+// Вызывает функцию при изменении приближения карты
+map.on('zoomend', function() {
+    RenderingChanger();
+});
+
+// Подпись автора
+var signatureControl = L.control({position: 'bottomright'});
+signatureControl.onAdd = function(map) {
+    var div = L.DomUtil.create('div', 'developer-signature');
+    div.innerHTML = 
+        '<div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 0px; border-radius: 0px;">' +
+            '<img src="1.png" width="41" height="41" alt="Developer Logo">' +
+            '<img src="ru.png" width="24" height="24" alt="Russia Flag" style="margin-left: 3px;">' +
+            '<img src="pl.png" width="24" height="24" alt="Palestine Flag" style="margin-left: 0px;">' +
+            '<a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 3px; text-decoration: underline; color: blue; font-size: 1em;">' +
+                'Mister Sh from Sixieme Terre' +
+            '</a>' +
+        '</div>';
+    return div;
+};
+signatureControl.addTo(map);
