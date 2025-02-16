@@ -17,7 +17,7 @@ var image3 = L.imageOverlay('2652x2154_rel.png', bounds);
 var image4 = L.imageOverlay('2652x2154_rac.png', bounds);
 var image5 = L.imageOverlay('2652x2154_geo.png', bounds);
 
-var baseMaps = {
+var baseMaps = { 
     "Политическая карта": image1,
     "Ресурсная карта": image2,
     "Религиозная карта": image3,
@@ -26,7 +26,9 @@ var baseMaps = {
 };
 
 image1.addTo(map);
+
 L.control.layers(baseMaps).addTo(map);
+
 map.fitBounds(bounds);
 
 // Иконки для разных типов меток
@@ -125,7 +127,6 @@ function loadData() {
                 var lat = parseFloat(row[2]); // Широта
                 var lng = parseFloat(row[3]); // Долгота
                 var type = row[4]; // Тип метки
-
                 // Проверяем корректность данных перед добавлением метки
                 if (!isNaN(lat) && !isNaN(lng) && iconTypes[type]) {
                     // Создаем метку
@@ -134,7 +135,6 @@ function loadData() {
                             <div class="popup-header">${name}</div>
                             <div class="popup-description">${description}</div>
                         `);
-
                     // Добавляем метку в соответствующую группу
                     layers[type].addLayer(marker);
                 }
@@ -211,4 +211,64 @@ function submitMarkerData() {
         // Отправка данных в Google Sheets
         gapi.client.sheets.spreadsheets.values.append({
             spreadsheetId: spreadsheetId,
-            range: `Sheet1!A${rowIndex}:E${
+            range: `Sheet1!A${rowIndex}:E${rowIndex}`,
+            valueInputOption: 'RAW',
+            resource: dataToAppend
+        }).then(function(response) {
+            console.log('Данные успешно добавлены:', response.result);
+            alert('Данные успешно добавлены!');
+        }).catch(function(error) {
+            console.error('Ошибка при добавлении данных:', error);
+            alert('Ошибка при добавлении данных.');
+        });
+    }).catch(function(error) {
+        console.error('Ошибка при загрузке данных для поиска свободной строки:', error);
+        alert('Ошибка при загрузке данных для поиска свободной строки.');
+    });
+}
+
+// Всплывающее окно с формой
+createPopupForm(capitalMarker);
+
+// Обновляем форму при перемещении маркера
+capitalMarker.on('dragend', function(event) {
+    createPopupForm(event.target);
+});
+
+// Меняет рендер карты при близком приближении
+function RenderingChanger() {
+    let curZoom = map.getZoom();
+    let mapContainer = map.getContainer();
+    // Выбираем все элементы img внутри контейнера карты
+    let images = mapContainer.querySelectorAll('img');
+    // Изменяем стили для каждого элемента img
+    images.forEach(function(img) {
+        if (curZoom >= 1) {
+            img.style.imageRendering = "pixelated";
+        } else {
+            img.style.imageRendering = "auto";
+        }
+    });
+}
+
+// Вызывает функцию при изменении приближения карты
+map.on('zoomend', function() {
+    RenderingChanger();
+});
+
+// Подпись автора
+var signatureControl = L.control({position: 'bottomright'});
+signatureControl.onAdd = function(map) {
+    var div = L.DomUtil.create('div', 'developer-signature');
+    div.innerHTML = 
+        '<div style="display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 0px; border-radius: 0px;">' +
+            '<img src="1.png" width="41" height="41" alt="Developer Logo">' +
+            '<img src="ru.png" width="24" height="24" alt="Russia Flag" style="margin-left: 3px;">' +
+            '<img src="pl.png" width="24" height="24" alt="Palestine Flag" style="margin-left: 0px;">' +
+            '<a href="https://vk.com/mistershsh" target="_blank" style="margin-left: 3px; text-decoration: underline; color: blue; font-size: 1em;">' +
+                'Mister Sh from Sixieme Terre' +
+            '</a>' +
+        '</div>';
+    return div;
+};
+signatureControl.addTo(map);
