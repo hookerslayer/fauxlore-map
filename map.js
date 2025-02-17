@@ -88,10 +88,8 @@ fetch(url)
     .then(data => {
         // Логируем полученные данные для отладки
         console.log("Полученные данные из Google Sheets:", data);
-
         // Получаем строки значений из таблицы
         var rows = data.values;
-
         // Пропускаем первую строку, если это заголовки
         rows.slice(1).forEach(function(row) {
             // Важно убедиться, что все необходимые поля присутствуют
@@ -101,16 +99,15 @@ fetch(url)
                 var lat = parseFloat(row[2]); // Широта
                 var lng = parseFloat(row[3]); // Долгота
                 var type = row[4]; // Тип метки
-
                 // Проверяем корректность данных перед добавлением метки
                 if (!isNaN(lat) && !isNaN(lng) && iconTypes[type]) {
                     // Создаем метку
                     var marker = L.marker([lat, lng], { icon: iconTypes[type] })
+                        .bindTooltip(name, { permanent: true, direction: 'right', offset: L.point(10, 0) })
                         .bindPopup(`
                             <div class="popup-header">${name}</div>
                             <div class="popup-description">${description}</div>
                         `);
-
                     // Добавляем метку в соответствующую группу
                     layers[type].addLayer(marker);
                 }
