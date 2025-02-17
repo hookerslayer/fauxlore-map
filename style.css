@@ -46,15 +46,29 @@ top: 2px
     font-size: 16px;
     text-decoration: bold;
     padding: 0px;
-    border-radius: 0;
+    border-radius: 5px;
 }
 
 .popup-description {
     color: black;
     font-size: 12px;
     padding: 0px;
-    border-radius: 0;
+    border-radius: 5px;
 }
 
+.leaflet-tooltip {
+        background-color: rgba(255, 255, 255, 0.5); /* Прозрачность фона */
+        border: 0px solid #ccc; /* Граница тултипа */
+        border-radius: 5px; /* Скругленные углы */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Тень */
+        padding: 0px 0px; /* Отступы внутри тултипа */
+        pointer-events: none; /* Чтобы тултип не мешал взаимодействию с картой */
+}
 
+    .leaflet-tooltip-top:before,
+    .leaflet-tooltip-bottom:before,
+    .leaflet-tooltip-left:before,
+    .leaflet-tooltip-right:before {
+        display: none;
+}
 	
