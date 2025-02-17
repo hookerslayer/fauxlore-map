@@ -103,7 +103,7 @@ fetch(url)
                 if (!isNaN(lat) && !isNaN(lng) && iconTypes[type]) {
                     // Создаем метку
                     var marker = L.marker([lat, lng], { icon: iconTypes[type] })
-                        .bindTooltip(name, { permanent: true, direction: 'right', offset: L.point(10, 0) })
+                        .bindTooltip(name, { permanent: true, direction: 'right', offset: L.point(20, 10) })
                         .bindPopup(`
                             <div class="popup-header">${name}</div>
                             <div class="popup-description">${description}</div>
