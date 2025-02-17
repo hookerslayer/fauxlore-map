@@ -2,11 +2,11 @@ var map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -2,
     maxZoom: 2,
-    attributionControl: false,
-    fullscreenControl: true,
-    fullscreenControlOptions: {
-        position: 'topleft'
-    }
+	attributionControl: false,
+	fullscreenControl: true,
+	fullscreenControlOptions: {
+		position: 'topleft'
+	}
 });
 
 var bounds = [[0, 0], [10000, 10000]];
@@ -17,7 +17,7 @@ var image3 = L.imageOverlay('2652x2154_rel.png', bounds);
 var image4 = L.imageOverlay('2652x2154_rac.png', bounds);
 var image5 = L.imageOverlay('2652x2154_geo.png', bounds);
 
-var baseMaps = { 
+var baseMaps = {
     "Политическая карта": image1,
     "Ресурсная карта": image2,
     "Религиозная карта": image3,
@@ -33,42 +33,42 @@ map.fitBounds(bounds);
 
 // Иконки для разных типов меток
 var iconTypes = {
-    'Столица': L.IconMaterial.icon({
-        icon: 'star', // Name of Material icon
-        iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
-        markerColor: '#B22222', // Marker fill color
-        outlineColor: 'black', // Marker outline color
-        outlineWidth: 2, // Marker outline width
-        iconSize: [25, 34], // Width and height of the icon
-        popupAnchor: [0, -34]
-    }),
-    'Город': L.IconMaterial.icon({
-        icon: 'home', // Name of Material icon
-        iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
-        markerColor: 'Orange', // Marker fill color
-        outlineColor: 'black', // Marker outline color
-        outlineWidth: 2, // Marker outline width
-        iconSize: [25, 34], // Width and height of the icon
-        popupAnchor: [0, -34]
-    }),
-    'Крепость': L.IconMaterial.icon({
-        icon: 'castle', // Name of Material icon
-        iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
-        markerColor: 'Gray', // Marker fill color
-        outlineColor: 'black', // Marker outline color
-        outlineWidth: 2, // Marker outline width
-        iconSize: [25, 34], // Width and height of the icon
-        popupAnchor: [0, -34]
-    }),
-    'Порт': L.IconMaterial.icon({
-        icon: 'anchor', // Name of Material icon
-        iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
-        markerColor: 'SteelBlue', // Marker fill color
-        outlineColor: 'black', // Marker outline color
-        outlineWidth: 2, // Marker outline width
-        iconSize: [12, 16], // Width and height of the icon
-        popupAnchor: [0, -16]
-    })
+	'Столица': L.IconMaterial.icon({
+		icon: 'star', // Name of Material icon
+		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+		markerColor: '#B22222', // Marker fill color
+		outlineColor: 'black', // Marker outline color
+		outlineWidth: 2, // Marker outline width
+		iconSize: [25, 34], // Width and height of the icon
+		popupAnchor: [0, -34]
+	}),
+	'Город': L.IconMaterial.icon({
+		icon: 'home', // Name of Material icon
+		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+		markerColor: 'Orange', // Marker fill color
+		outlineColor: 'black', // Marker outline color
+		outlineWidth: 2, // Marker outline width
+		iconSize: [25, 34], // Width and height of the icon
+		popupAnchor: [0, -34]
+	}),
+	'Крепость': L.IconMaterial.icon({
+		icon: 'castle', // Name of Material icon
+		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+		markerColor: 'Gray', // Marker fill color
+		outlineColor: 'black', // Marker outline color
+		outlineWidth: 2, // Marker outline width
+		iconSize: [25, 34], // Width and height of the icon
+		popupAnchor: [0, -34]
+	}),
+	'Порт': L.IconMaterial.icon({
+		icon: 'anchor', // Name of Material icon
+		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+		markerColor: 'SteelBlue', // Marker fill color
+		outlineColor: 'black', // Marker outline color
+		outlineWidth: 2, // Marker outline width
+		iconSize: [12, 16], // Width and height of the icon
+		popupAnchor: [0, -16]
+	})
 };
 
 // Группы слоев для разных типов меток
@@ -79,54 +79,29 @@ var layers = {
     'Порт': L.layerGroup().addTo(map)
 };
 
-// ID Google Таблицы и Client ID
-var spreadsheetId = '1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k';
-var clientId = '1038367339519-iff9iocnsab7plcbqhrihm4lpc83udtj.apps.googleusercontent.com';
-
-// Инициализация клиента и аутентификация
-function initClient() {
-    gapi.client.init({
-        clientId: clientId,
-        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-        scope: 'https://www.googleapis.com/auth/spreadsheets'
-    }).then(function () {
-        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    });
-}
-
-function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
-        console.log('User is signed in.');
-        loadData();
-    } else {
-        console.log('User is not signed in.');
-        gapi.auth2.getAuthInstance().signIn();
-    }
-}
-
-function handleClientLoad() {
-    gapi.load('client:auth2', initClient);
-}
-
-window.onload = handleClientLoad;
+// ID Google Таблицы и API Key
+var url = `https://sheets.googleapis.com/v4/spreadsheets/1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k/values/Sheet1!A1:E100?key=AIzaSyBdhS5jcD7VLxHDWwy1cC8pZUM0p6_S4xU`;
 
 // Загружаем данные с Google Sheets
-function loadData() {
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: spreadsheetId,
-        range: 'Sheet1!A1:E100'
-    }).then(function(response) {
-        var data = response.result;
+fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        // Логируем полученные данные для отладки
         console.log("Полученные данные из Google Sheets:", data);
+
+        // Получаем строки значений из таблицы
         var rows = data.values;
+
+        // Пропускаем первую строку, если это заголовки
         rows.slice(1).forEach(function(row) {
+            // Важно убедиться, что все необходимые поля присутствуют
             if (row.length >= 5) {
                 var name = row[0]; // Имя
                 var description = row[1]; // Описание
                 var lat = parseFloat(row[2]); // Широта
                 var lng = parseFloat(row[3]); // Долгота
                 var type = row[4]; // Тип метки
+
                 // Проверяем корректность данных перед добавлением метки
                 if (!isNaN(lat) && !isNaN(lng) && iconTypes[type]) {
                     // Создаем метку
@@ -135,15 +110,16 @@ function loadData() {
                             <div class="popup-header">${name}</div>
                             <div class="popup-description">${description}</div>
                         `);
+
                     // Добавляем метку в соответствующую группу
                     layers[type].addLayer(marker);
                 }
             }
         });
-    }).catch(function(error) {
+    })
+    .catch(error => {
         console.error("Ошибка загрузки данных с Google Sheets:", error);
     });
-}
 
 // Добавляем контрол для включения/выключения групп меток
 L.control.layers(null, {
@@ -159,105 +135,46 @@ var capitalMarker = L.marker([4500, 4500], {
     draggable: true // Маркер можно перемещать
 }).addTo(map);
 
-// Функция для создания формы в всплывающем окне
-function createPopupForm(marker) {
-    var position = marker.getLatLng();
-    var formHtml = `
-        <form id="markerForm">
-            <label for="markerName">Название:</label>
-            <input type="text" id="markerName" name="markerName" required><br>
-            <label for="markerType">Тип маркера:</label>
-            <select id="markerType" name="markerType" required>
-                <option value="Столица">Столица</option>
-                <option value="Город">Город</option>
-                <option value="Крепость">Крепость</option>
-                <option value="Порт">Порт</option>
-            </select><br>
-            <label for="markerCoords">Координаты:</label>
-            <input type="text" id="markerCoords" name="markerCoords" value="${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}" readonly><br>
-            <button type="button" onclick="submitMarkerData()">Сохранить</button>
-        </form>
-    `;
-    marker.bindPopup(formHtml).openPopup();
-}
+// Всплывающее окно с координатами
+capitalMarker.bindPopup(`<b>Столица</b><br>Координаты: ${capitalMarker.getLatLng().lat}, ${capitalMarker.getLatLng().lng}`).openPopup();
 
-// Функция для отправки данных в Google Sheets
-function submitMarkerData() {
-    var form = document.getElementById('markerForm');
-    var markerName = form.elements['markerName'].value;
-    var markerType = form.elements['markerType'].value;
-    var markerCoords = form.elements['markerCoords'].value.split(',').map(Number);
-    var lat = markerCoords[0];
-    var lng = markerCoords[1];
 
-    // Поиск первой свободной строки в столбце A
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: spreadsheetId,
-        range: 'Sheet1!A:A'
-    }).then(function(response) {
-        var rows = response.result.values || [];
-        var rowIndex = 2; // Начинаем с A2
-        while (rows[rowIndex - 2]) {
-            rowIndex++;
-        }
-
-        // Данные для записи
-        var dataToAppend = {
-            values: [
-                [markerName, '', lat, lng, markerType]
-            ]
-        };
-
-        // Отправка данных в Google Sheets
-        gapi.client.sheets.spreadsheets.values.append({
-            spreadsheetId: spreadsheetId,
-            range: `Sheet1!A${rowIndex}:E${rowIndex}`,
-            valueInputOption: 'RAW',
-            resource: dataToAppend
-        }).then(function(response) {
-            console.log('Данные успешно добавлены:', response.result);
-            alert('Данные успешно добавлены!');
-        }).catch(function(error) {
-            console.error('Ошибка при добавлении данных:', error);
-            alert('Ошибка при добавлении данных.');
-        });
-    }).catch(function(error) {
-        console.error('Ошибка при загрузке данных для поиска свободной строки:', error);
-        alert('Ошибка при загрузке данных для поиска свободной строки.');
-    });
-}
-
-// Всплывающее окно с формой
-createPopupForm(capitalMarker);
-
-// Обновляем форму при перемещении маркера
+// Обновляем координаты при перемещении маркера
 capitalMarker.on('dragend', function(event) {
-    createPopupForm(event.target);
+    var marker = event.target;
+    var position = marker.getLatLng(); // Получаем новые координаты
+    
+    marker.setPopupContent(`<b>Столица</b><br>Координаты: ${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}`).openPopup();
+    console.log(`Новые координаты: ${position.lat}, ${position.lng}`); // Лог координат
 });
 
-// Меняет рендер карты при близком приближении
-function RenderingChanger() {
+//Меняет рендер карты при близком приближении
+function RenderingChanger(){
     let curZoom = map.getZoom();
     let mapContainer = map.getContainer();
+
     // Выбираем все элементы img внутри контейнера карты
     let images = mapContainer.querySelectorAll('img');
+
     // Изменяем стили для каждого элемента img
     images.forEach(function(img) {
-        if (curZoom >= 1) {
+        if( curZoom >= 1){
             img.style.imageRendering = "pixelated";
-        } else {
+        }
+        else{
             img.style.imageRendering = "auto";
         }
     });
 }
 
-// Вызывает функцию при изменении приближения карты
-map.on('zoomend', function() {
+//вызывает функцию при изменении приближения карты
+map.on('zoomend', function(){
     RenderingChanger();
 });
 
 // Подпись автора
 var signatureControl = L.control({position: 'bottomright'});
+
 signatureControl.onAdd = function(map) {
     var div = L.DomUtil.create('div', 'developer-signature');
     div.innerHTML = 
@@ -271,4 +188,5 @@ signatureControl.onAdd = function(map) {
         '</div>';
     return div;
 };
+
 signatureControl.addTo(map);
