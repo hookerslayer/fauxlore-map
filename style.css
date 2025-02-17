@@ -65,4 +65,10 @@ top: 2px
         pointer-events: none; /* Чтобы тултип не мешал взаимодействию с картой */
 }
 
-	
+/* Удаление стрелочки
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+    display: none;
+    } */
