@@ -109,7 +109,7 @@ fetch(url)
                         `);
 
                     if (type !== 'Порт') {
-                        marker.bindTooltip(name, { permanent: true, direction: 'bottom', offset: L.point(11, -15) });
+                        marker.bindTooltip(name, { permanent: true, direction: 'right', offset: L.point(11, -15) });
                     }
 
                     // Добавляем метку в соответствующую группу
