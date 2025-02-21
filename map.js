@@ -12,10 +12,10 @@ var map = L.map('map', {
 var bounds = [[0, 0], [10000, 10000]];
 
 var image1 = L.imageOverlay('fauxlore_map.png', bounds);
-var image2 = L.imageOverlay('2652x2154_res.png', bounds);
-var image3 = L.imageOverlay('2652x2154_rel.png', bounds);
-var image4 = L.imageOverlay('2652x2154_rac.png', bounds);
-var image5 = L.imageOverlay('2652x2154_geo.png', bounds);
+var image2 = L.imageOverlay('res_fauxlore_map.png', bounds);
+var image3 = L.imageOverlay('rel_fauxlore_map.png', bounds);
+var image4 = L.imageOverlay('rac_fauxlore_map.png', bounds);
+var image5 = L.imageOverlay('fauxlore_map.png', bounds);
 
 var baseMaps = {
     "Политическая карта": image1,
