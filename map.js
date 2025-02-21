@@ -15,7 +15,7 @@ var image1 = L.imageOverlay('fauxlore_map.png', bounds);
 var image2 = L.imageOverlay('res_fauxlore_map.png', bounds);
 var image3 = L.imageOverlay('rel_fauxlore_map.png', bounds);
 var image4 = L.imageOverlay('rac_fauxlore_map.png', bounds);
-var image5 = L.imageOverlay('fauxlore_map.png', bounds);
+var image5 = L.imageOverlay('geo_fauxlore_map.png', bounds);
 
 var baseMaps = {
     "Политическая карта": image1,
