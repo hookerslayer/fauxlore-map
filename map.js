@@ -2,11 +2,11 @@ var map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -2,
     maxZoom: 2,
-	attributionControl: false,
-	fullscreenControl: true,
-	fullscreenControlOptions: {
-		position: 'topleft'
-	}
+    attributionControl: false,
+    fullscreenControl: true,
+    fullscreenControlOptions: {
+        position: 'topleft'
+    }
 });
 
 var bounds = [[0, 0], [10000, 10000]];
@@ -33,42 +33,42 @@ map.fitBounds(bounds);
 
 // Иконки для разных типов меток
 var iconTypes = {
-	'Столица': L.IconMaterial.icon({
-		icon: 'star', // Name of Material icon
-		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
-		markerColor: '#B22222', // Marker fill color
-		outlineColor: 'black', // Marker outline color
-		outlineWidth: 2, // Marker outline width
-		iconSize: [25, 34], // Width and height of the icon
-		popupAnchor: [0, -34]
-	}),
-	'Город': L.IconMaterial.icon({
-		icon: 'home', // Name of Material icon
-		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
-		markerColor: 'Orange', // Marker fill color
-		outlineColor: 'black', // Marker outline color
-		outlineWidth: 2, // Marker outline width
-		iconSize: [25, 34], // Width and height of the icon
-		popupAnchor: [0, -34]
-	}),
-	'Крепость': L.IconMaterial.icon({
-		icon: 'castle', // Name of Material icon
-		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
-		markerColor: 'Gray', // Marker fill color
-		outlineColor: 'black', // Marker outline color
-		outlineWidth: 2, // Marker outline width
-		iconSize: [25, 34], // Width and height of the icon
-		popupAnchor: [0, -34]
-	}),
-	'Порт': L.IconMaterial.icon({
-		icon: 'anchor', // Name of Material icon
-		iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
-		markerColor: 'SteelBlue', // Marker fill color
-		outlineColor: 'black', // Marker outline color
-		outlineWidth: 2, // Marker outline width
-		iconSize: [12, 16], // Width and height of the icon
-		popupAnchor: [0, -16]
-	})
+    'Столица': L.IconMaterial.icon({
+        icon: 'star', // Name of Material icon
+        iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+        markerColor: '#B22222', // Marker fill color
+        outlineColor: 'black', // Marker outline color
+        outlineWidth: 2, // Marker outline width
+        iconSize: [25, 34], // Width and height of the icon
+        popupAnchor: [0, -34]
+    }),
+    'Город': L.IconMaterial.icon({
+        icon: 'home', // Name of Material icon
+        iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+        markerColor: 'Orange', // Marker fill color
+        outlineColor: 'black', // Marker outline color
+        outlineWidth: 2, // Marker outline width
+        iconSize: [25, 34], // Width and height of the icon
+        popupAnchor: [0, -34]
+    }),
+    'Крепость': L.IconMaterial.icon({
+        icon: 'castle', // Name of Material icon
+        iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+        markerColor: 'Gray', // Marker fill color
+        outlineColor: 'black', // Marker outline color
+        outlineWidth: 2, // Marker outline width
+        iconSize: [25, 34], // Width and height of the icon
+        popupAnchor: [0, -34]
+    }),
+    'Порт': L.IconMaterial.icon({
+        icon: 'anchor', // Name of Material icon
+        iconColor: 'white', // Material icon color (could be rgba, hex, html name...)
+        markerColor: 'SteelBlue', // Marker fill color
+        outlineColor: 'black', // Marker outline color
+        outlineWidth: 2, // Marker outline width
+        iconSize: [12, 16], // Width and height of the icon
+        popupAnchor: [0, -16]
+    })
 };
 
 // Группы слоев для разных типов меток
@@ -78,6 +78,27 @@ var layers = {
     'Крепость': L.layerGroup().addTo(map),
     'Порт': L.layerGroup().addTo(map)
 };
+
+// Создаем отдельный слой для маркера с координатами
+var coordinateTrackingLayer = L.layerGroup();
+
+// Добавляем перемещаемый маркер столицы в слой "Отслеживание координат"
+var capitalMarker = L.marker([4500, 4500], {
+    icon: iconTypes['Столица'],
+    draggable: true // Маркер можно перемещать
+}).addTo(coordinateTrackingLayer);
+
+// Всплывающее окно с координатами
+capitalMarker.bindPopup(`<b>Столица</b><br>Координаты: ${capitalMarker.getLatLng().lat}, ${capitalMarker.getLatLng().lng}`);
+
+// Обновляем координаты при перемещении маркера
+capitalMarker.on('dragend', function(event) {
+    var marker = event.target;
+    var position = marker.getLatLng(); // Получаем новые координаты
+    
+    marker.setPopupContent(`<b>Столица</b><br>Координаты: ${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}`).openPopup();
+    console.log(`Новые координаты: ${position.lat}, ${position.lng}`); // Лог координат
+});
 
 // ID Google Таблицы и API Key
 var url = `https://sheets.googleapis.com/v4/spreadsheets/1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k/values/Sheet1!A1:E100?key=AIzaSyBdhS5jcD7VLxHDWwy1cC8pZUM0p6_S4xU`;
@@ -127,27 +148,9 @@ L.control.layers(null, {
     'Столицы': layers['Столица'],
     'Города': layers['Город'],
     'Крепости': layers['Крепость'],
-    'Порты': layers['Порт']
+    'Порты': layers['Порт'],
+    'Отслеживание координат': coordinateTrackingLayer // Добавляем слой для маркера с координатами
 }).addTo(map);
-
-// Добавляем перемещаемый маркер столицы
-var capitalMarker = L.marker([4500, 4500], {
-    icon: iconTypes['Столица'],
-    draggable: true // Маркер можно перемещать
-}).addTo(map);
-
-// Всплывающее окно с координатами
-capitalMarker.bindPopup(`<b>Столица</b><br>Координаты: ${capitalMarker.getLatLng().lat}, ${capitalMarker.getLatLng().lng}`).openPopup();
-
-
-// Обновляем координаты при перемещении маркера
-capitalMarker.on('dragend', function(event) {
-    var marker = event.target;
-    var position = marker.getLatLng(); // Получаем новые координаты
-    
-    marker.setPopupContent(`<b>Столица</b><br>Координаты: ${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}`).openPopup();
-    console.log(`Новые координаты: ${position.lat}, ${position.lng}`); // Лог координат
-});
 
 //Меняет рендер карты при близком приближении
 function RenderingChanger(){
