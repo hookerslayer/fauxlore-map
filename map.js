@@ -101,7 +101,7 @@ capitalMarker.on('dragend', function(event) {
 });
 
 // ID Google Таблицы и API Key
-var url = `https://sheets.googleapis.com/v4/spreadsheets/1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k/values/Sheet1!A1:E100?key=AIzaSyBdhS5jcD7VLxHDWwy1cC8pZUM0p6_S4xU`;
+var url = `https://sheets.googleapis.com/v4/spreadsheets/1JhCygdVpq-13xNVrUQVvGzFXhYETviRZKWYhDv-ky_k/values/Sheet1!A:E?key=AIzaSyBdhS5jcD7VLxHDWwy1cC8pZUM0p6_S4xU`;
 
 // Загружаем данные с Google Sheets
 fetch(url)
