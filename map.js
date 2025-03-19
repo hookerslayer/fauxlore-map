@@ -9,6 +9,7 @@ var map = L.map('map', {
     }
 });
 
+let curZoom = map.getZoom();
 var bounds = [[0, 0], [10000, 10000]];
 
 var image1 = L.imageOverlay('fauxlore_map.png', bounds);
@@ -154,7 +155,7 @@ L.control.layers(null, {
 
 //Меняет рендер карты при близком приближении
 function RenderingChanger(){
-    let curZoom = map.getZoom();
+    curZoom = map.getZoom();
     let mapContainer = map.getContainer();
 
     // Выбираем все элементы img внутри контейнера карты
@@ -170,10 +171,47 @@ function RenderingChanger(){
         }
     });
 }
+function setupZoomHideSpecificPanes(map, layersToHide, minZoomToHide) {
+    // Проходим по всем слоям карты
+    // map.eachLayer(function(layer) {
+    //     // Проверяем, является ли слой одним из тех, которые нужно скрыть
+    //     if (layersToHide.includes(layer)) {
+    //         var pane = layer.getPane();
+    //         if (pane) {
+    //             if (curZoom >= minZoomToHide) {
+    //                 pane.style.display = 'none';
+    //             } else {
+    //                 pane.style.display = 'block';
+    //             }
+    //         }
+    //     }
+    // });
+    // let panes = document.getElementsByClassName("leaflet-tooltip");
+    // panes.forEach(function(pane){
+    //     if (curZoom >= minZoomToHide) {
+    //         pane.style.display = 0.8;
+    //     } else {
+    //         pane.style.opacity = 0;
+    //     }
+    // });
+    // L.control.layers.forEach(function(layer){
+    //     if (layersToHide.includes(layer)) {
+    //         var pane = layer.getPane();
+    //         if (pane) {
+    //             if (curZoom >= minZoomToHide) {
+    //                 pane.style.display = 'none';
+    //             } else {
+    //                 pane.style.display = 'block';
+    //             }
+    //         }
+    //     }
+    // });
+}
 
 //вызывает функцию при изменении приближения карты
 map.on('zoomend', function(){
     RenderingChanger();
+    setupZoomHideSpecificPanes(map, [layers['Столица'], layers['Город']], 5);
 });
 
 // Подпись автора
